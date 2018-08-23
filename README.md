@@ -1,5 +1,6 @@
 # Continuous Security Framework
 
+[![Build Status](https://travis-ci.org/ObjectifLibre/csf.svg?branch=master)](https://travis-ci.org/ObjectifLibre/csf) [![FOSSA Status](https://app.fossa.io/api/projects/custom%2B4963%2Fgit%40github.com%3AObjectifLibre%2Fcsf.git.svg?type=shield)](https://app.fossa.io/projects/custom%2B4963%2Fgit%40github.com%3AObjectifLibre%2Fcsf.git?ref=badge_shield)
 
 Continuous Security Framework (CSF for short) is an open-source project aiming at enabling continous security in cloud infrastructures (but not only).
 You can see it as IFTTT for the cloud. Similar to a typical continuous integration, CSF can be used to build pipelines composed of different tasks
