@@ -1,0 +1,18 @@
+{
+    "name": "k8s_scan_images",
+    "event": "k8s_image_validation_request",
+    "script": "result = {'images': []}; for (i = 0; i < event['image_review']['spec']['containers'].length; i++) { container = event['image_review']['spec']['containers'][i]; if (container['image'].substring(0, 20) != 'gcr.io/k8s-minikube'){result['images'].push(container['image']);console.log(container['image'])}}; if (result['images'].length > 0) {nextAction = 'scan_images_clair'} else {nextAction = 'validate_image'; result = {'validate': true, 'uuid': event['uuid']};};",
+    "actions": {
+	"scan_images_clair": {
+	    "action": "scan_images",
+	    "module": "klar",
+	    "script": "nextAction = 'validate_image'; result = {'uuid': event['uuid'], 'validate': true}; for (i = 0; i < event['image_review']['spec']['containers'].length; i++) { container = event['image_review']['spec']['containers'][i]; if (actionData[container['image']].length > 0) {result['validate'] = false; break;}}"
+	},
+	"validate_image": {
+	    "action": "validate_image",
+	    "module": "k8s_imagevalidate",
+	    "script": ""
+	}
+    }
+}
+

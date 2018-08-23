@@ -1,0 +1,33 @@
+sudo: required
+
+language: go
+
+services:
+  - docker
+
+install: true
+
+cache:
+  directories:
+  - vendor
+
+before_script:
+  - go get -u github.com/kardianos/govendor
+  - govendor sync
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - docker build -t csf:$TRAVIS_COMMIT .
+        - if [ $TRAVIS_BRANCH == "master" ]; then
+           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin &&
+           docker tag csf:$TRAVIS_COMMIT objectiflibre/csf:latest &&
+           docker push objectiflibre/csf:latest;
+          fi
+    - stage: test
+      script: govendor test +local
+      script:
+        - "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | sudo bash"
+        - fossa analyze
+        - govendor test +local

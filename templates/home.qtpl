@@ -1,0 +1,25 @@
+{% func HomeHello(name string) %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSF Web UI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/uikit.min.css" />
+    <script src="/static/js/uikit.min.js"></script>
+    <script src="/static/js/uikit-icons.min.js"></script>
+  </head>
+  <body class="uk-height-1-1">
+    <div class="uk-flex uk-flex-center uk-flex-middle uk-background-secondary uk-height-viewport uk-light">
+      <div class="uk-position-bottom-center uk-position-small">
+	<span class="uk-text-small uk-text-muted">CSF - Continuous Security Framework</span>
+      </div>
+      <div class="uk-width-medium">
+	<p class="uk-text-legend">
+	  Hello, {%s name %}!
+	</p>
+      </div>
+    </div>
+</body>
+</html>
+{% endfunc %}

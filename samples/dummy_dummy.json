@@ -1,0 +1,18 @@
+{
+    "name": "dummy_dummy",
+    "event": "dummy_event",
+    "script": "result = event; nextAction = 'dummy_print'",
+    "actions": 	{
+	"dummy_print": {
+	    "script": "nextAction = 'dummy_print2'; result = {'coucou': 'bonjour'};",
+	    "action": "dummy_action",
+	    "module": "dummy"
+	},
+	"dummy_print2": {
+	    "script": "",
+	    "action": "dummy_action",
+	    "module": "dummy"
+	}
+    }
+}
+

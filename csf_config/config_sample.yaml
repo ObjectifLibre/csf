@@ -1,0 +1,30 @@
+api:
+  bindAddress: ":8888"
+
+webUI:
+  enabled: false
+  bindAddress: ":8080"
+
+storage:
+  provider: "localdb"
+  config:
+    path: "./db"
+    arbitrary_key: "arbitrary_value"
+
+configProvider:
+  provider: "localfiles"
+  config:
+    path: "./config"
+    arbitrary_key: "arbitrary_value"
+
+csf:
+  logLevel: "DEBUG"
+  logFormat: "logfmt"
+  eventsBufferSize: 500
+  eventsources:
+    - "dummy"
+  actionsModules:
+    - "dummy"
+
+metrics:
+  prometheusEndpoint: "[::]:8042"

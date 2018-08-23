@@ -1,0 +1,13 @@
+{
+    "name": "k8s_accept_all_images",
+    "event": "k8s_image_validation_request",
+    "script": "nextAction = 'validate_image'; result = {'validate': true, 'uuid': event['uuid']};",
+    "actions": {
+	"validate_image": {
+	    "action": "validate_image",
+	    "module": "k8s_imagevalidate",
+	    "script": ""
+	}
+    }
+}
+

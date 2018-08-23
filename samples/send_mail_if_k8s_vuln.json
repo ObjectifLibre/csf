@@ -1,0 +1,20 @@
+{
+    "name": "send_mail_if_vuln_in_k8s_pods",
+    "event": "new_vuln",
+    "script": "if ('new' in event && event['new']['ancestries'].length > 0) {nextAction = 'check_if_image_deployed'; result = {'image': event['new']['ancestries'][0]['name']};};",
+    "actions": {
+	"check_if_image_deployed":
+	{
+	    "script": "if (actionData['pods'].length > 0) {nextAction = 'send_mail'; result = {'to': 'email@domain.tld','subject': 'A deployed docker image is vulnerable', 'content': 'The docker image ' + event['new']['ancestries'][0]['name'] + ' is vulnerable. This image is currently deployed in the folowing k8s pods: ' + JSON.stringify(actionData['pods']) + '. Vuln details:\\n' + JSON.stringify(event)};};",
+	    "action": "is_image_in_pods",
+	    "module": "k8s"
+	},
+	"send_mail":
+	{
+	    "script": "",
+	    "action": "send_mail",
+	    "module": "mail"
+	}
+    }
+}
+
