@@ -1,4 +1,4 @@
-vendor/
-static/
-statik/
-templates/
+vendor/**
+static/**
+statik/**
+templates/**
