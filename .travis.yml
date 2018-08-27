@@ -20,18 +20,22 @@ before_script:
 jobs:
   include:
     - stage: build
-      name: "Build docker image"
-      script:
-        - docker build -t csf:$TRAVIS_COMMIT .
-        - if [ $TRAVIS_BRANCH == "master" ]; then
-           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin &&
-           docker tag csf:$TRAVIS_COMMIT objectiflibre/csf:latest &&
-           docker push objectiflibre/csf:latest;
-          fi
+      name: build go binary
+      script: go build
     - stage: test
-      script: govendor test +local
-      name: "Unit tests"
+      script: govendor test +local -race -coverprofile=coverage.txt -covermode=atomic
+      name: Unit tests
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
     - script: "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | sudo bash && fossa analyze"
-      name: "License check"
+      name: License check
     - script: "sudo apt-get -y update && sudo apt-get -y install npm && npm install -g snyk && snyk auth $SNYK_API_KEY && snyk monitor && snyk test"
-      name: "Vulnerable dependencies check"
+      name: Vulnerable dependencies check
+    - stage: docker
+      script: >
+        docker build -t objectiflibre/csf:$TRAVIS_COMMIT . &&
+        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin &&
+        docker tag objectiflibre/csf:$TRAVIS_COMMIT objectiflibre/csf:latest &&
+        docker push objectiflibre/csf:$TRAVIS_COMMIT && docker push objectiflibre/csf:latest
+      name: Build and push docker image
+      if: branch = master
