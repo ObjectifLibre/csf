@@ -60,5 +60,4 @@ You can use multiple actions to easily build complex pipelines. Here is a simple
 
 Another use case is [on the fly docker images scanning](https://github.com/ObjectifLibre/csf/blob/master/docs/k8s_imagereviewWebhook_clair.md) with kubernetes.
 
-You can find different sample json files in the `samples` folder.
-
+To write your own pipelines (called reactions here), you can find different sample json files in the `samples` folder or check out the [docs about reactions](https://github.com/ObjectifLibre/csf/blob/master/docs/write_reactions.md).
